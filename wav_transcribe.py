@@ -5,7 +5,9 @@ import contextlib
 import sys
 from os import path
 path_dir = ""
+
 def function():
+    i = 0
     WAV_FILE = path.join(path_dir)
     extension = ""
     extension = WAV_FILE.split(".")[-1]
@@ -24,12 +26,13 @@ def function():
     end_time = 4.0;
     print(end)
     while(start != end):
+        i+=1
         with sr.WavFile(WAV_FILE) as source:
             audio = r.record(source,end_time, start)
             start += 4.0
             end_time += 4.0
         try:
-            print(r.recognize_google(audio)),
+            print(i,"\n",start," --> ",end_time , r.recognize_google(audio)),
         except sr.UnknownValueError:
             print "",
         except sr.RequestError as e:
