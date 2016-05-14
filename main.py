@@ -17,10 +17,15 @@ class SaveDialog(FloatLayout):
     text_input = ObjectProperty(None)
     cancel = ObjectProperty(None)
 
+class ConvertDialog(FloatLayout):
+ 	convert = ObjectProperty(None)
+ 	cancel = ObjectProperty(None)
+
 
 class Root(FloatLayout):
     loadfile = ObjectProperty(None)
     savefile = ObjectProperty(None)
+    convertfile = ObjectProperty(None)
     text_input = ObjectProperty(None)
 
     def dismiss_popup(self):
@@ -38,6 +43,11 @@ class Root(FloatLayout):
                             size_hint=(0.9, 0.9))
         self._popup.open()
 
+    def show_convert(self):
+     	content = ConvertDialog(save=self.save, cancel=self.dismiss_popup)
+     	self._popup = Popup(title="Convert file", content=content, size_hint(0.9, 0.9) )
+     	self._popup.open();
+
     def load(self, path, filename):
         with open(os.path.join(path, filename[0])) as stream:
             self.text_input.text = stream.read()
@@ -50,6 +60,12 @@ class Root(FloatLayout):
 
         self.dismiss_popup()
 
+    def convert(self,path,filename):
+    	with open(os.path,join(path, filename[0])) as stream:
+
+    		###	
+    self.dismiss_popup()
+
 
 class Editor(App):
     pass
@@ -57,6 +73,7 @@ class Editor(App):
 Factory.register('Root', cls=Root)
 Factory.register('LoadDialog', cls=LoadDialog)
 Factory.register('SaveDialog', cls=SaveDialog)
+Factory.register('ConvertDialog', cls=ConvertDialog)
 
 if __name__ == '__main__':
     Editor().run()
