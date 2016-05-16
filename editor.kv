@@ -1,34 +1,24 @@
 Root:
-    text_input: text_input
 
+    Widget:
+        canvas:
+            Rectangle:
+                source: "wall.jpg"
+                size: self.size
+                pos: self.pos         
     BoxLayout:
         orientation: 'vertical'
         BoxLayout:
             size_hint_y: None
             height: 30
-            Button:
-                text: 'Browse'
-                on_release: root.show_load()
             
             Button:
                 text: 'Convert'
                 on_release: root.show_convert()
-
-        BoxLayout:
-            TextInput:
-                id: text_input
-                text: ''
-
-            RstDocument:
-                text: text_input.text
-                show_errors: True
-
-
-
+           
 
 
 <ConvertDialog>
-    text_input: text_input
     BoxLayout:
         size: root.size    
         pos: root.pos
@@ -37,17 +27,9 @@ Root:
             id: filechooser
             on_selection: root.convert(filechooser.path, filechooser.selection)
 
-        TextInput:
-            id: text_input
-            size_hint_y: None
-            height: 30
-            multiline: False
-
         BoxLayout:
             size_hint_y: None
             height: 30
             Button:
                 text: "Cancel"
                 on_release: root.cancel()
-
-            

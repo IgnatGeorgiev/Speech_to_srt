@@ -3,8 +3,6 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.factory import Factory
 from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
-from kivy.uix.widget import Widget
-from kivy.graphics.instructions import Canvas
 
 import os
 import speech_recognition as sr
@@ -31,16 +29,9 @@ class Root(FloatLayout):
 
     def convert(self,path,filename):
     	path_dir = os.path.join(path, filename[0])
-        os.system("python wav_transcribe.py " + path_dir)
+        os.system("python wav_transcribe.py " + path_dir+" > new_file.srt")
     	self.dismiss_popup()
-    def redraw(self, args):
-        self.bg_rect.size = self.size
-        self.bg_rect.pos = self.pos
-
-    widget = Widget()
-    with widget.canvas:
-        widget.bg_rect = Rectangle(source="cover.jpg", pos=self.pos, size=self.size)
-    widget.bind(pos=redraw, size=redraw)    
+        
 
 class Editor(App):
     pass
