@@ -5,6 +5,15 @@ from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 
 import os
+import speech_recognition as sr
+import wave
+import os
+import contextlib
+import sys
+from os import path
+path_dir = ""
+
+
 
 
 class LoadDialog(FloatLayout):
@@ -28,6 +37,40 @@ class Root(FloatLayout):
     convertfile = ObjectProperty(None)
     text_input = ObjectProperty(None)
 
+    def function(self):
+	    i = 0
+	    WAV_FILE = path.join(path_dir)
+	    extension = ""
+	    extension = WAV_FILE.split(".")[-1]
+	    text_file =("sample.txt","w")
+	    if (extension != "wav"):
+	        os.system("avconv -i " + WAV_FILE + " -vn -f wav temp.wav")
+	        WAV_FILE  = "temp.wav"
+	    fname = WAV_FILE
+	    with contextlib.closing(wave.open(fname,'r')) as f:
+	        frames = f.getnframes()
+	        rate = f.getframerate()
+	        duration = frames / float(rate)
+	        end = duration
+	    r = sr.Recognizer()
+	    start = 0.0;
+	    end_time = 4.0;
+	    print(end)
+	    while(start != end):
+	        i+=1
+	        with sr.WavFile(WAV_FILE) as source:
+	            audio = r.record(source,end_time, start)
+	            start += 4.0
+	            end_time += 4.0
+	        try:
+	            print(i,"\n",start," --> ",end_time , r.recognize_google(audio)),
+	        except sr.UnknownValueError:
+	            print "",
+	        except sr.RequestError as e:
+	            print("Could not request results from Google Speech Recognition service; {0}".format(e))
+	    os.remove("temp.wav")
+	    return 0
+
     def dismiss_popup(self):
         self._popup.dismiss()
 
@@ -44,27 +87,26 @@ class Root(FloatLayout):
         self._popup.open()
 
     def show_convert(self):
-     	content = ConvertDialog(save=self.save, cancel=self.dismiss_popup)
-     	self._popup = Popup(title="Convert file", content=content, size_hint(0.9, 0.9) )
+     	content = ConvertDialog(convert=self.convert, canscel=self.dismiss_popup)
+     	self._popup = Popup(title="Convert file", content=content , size_hint=(0.9, 0.9) )
      	self._popup.open();
 
     def load(self, path, filename):
-        with open(os.path.join(path, filename[0])) as stream:
-            self.text_input.text = stream.read()
+        path_dir = os.path.join(path, filename[0])
 
         self.dismiss_popup()
 
     def save(self, path, filename):
         with open(os.path.join(path, filename), 'w') as stream:
             stream.write(self.text_input.text)
+		
+	    self.dismiss_popup()
 
-        self.dismiss_popup()
 
     def convert(self,path,filename):
-    	with open(os.path,join(path, filename[0])) as stream:
-
-    		###	
-    self.dismiss_popup()
+    	function()
+    	
+    	self.dismiss_popup()
 
 
 class Editor(App):
