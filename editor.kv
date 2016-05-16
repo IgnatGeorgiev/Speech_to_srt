@@ -9,9 +9,7 @@ Root:
             Button:
                 text: 'Browse'
                 on_release: root.show_load()
-            Button:
-                text: 'Save'
-                on_release: root.show_save()
+            
             Button:
                 text: 'Convert'
                 on_release: root.show_convert()
@@ -44,32 +42,7 @@ Root:
                 text: "Load"
                 on_release: root.load(filechooser.path, filechooser.selection)
 
-<SaveDialog>:
-    text_input: text_input
-    BoxLayout:
-        size: root.size
-        pos: root.pos
-        orientation: "vertical"
-        FileChooserListView:
-            id: filechooser
-            on_selection: text_input.text = self.selection and self.selection[0] or ''
 
-        TextInput:
-            id: text_input
-            size_hint_y: None
-            height: 30
-            multiline: False
-
-        BoxLayout:
-            size_hint_y: None
-            height: 30
-            Button:
-                text: "Cancel"
-                on_release: root.cancel()
-
-            Button:
-                text: "Save"
-                on_release: root.save(filechooser.path, text_input.text)
 
 <ConvertDialog>
     text_input: text_input
@@ -79,7 +52,7 @@ Root:
         orientation: "vertical"
         FileChooserListView:
             id: filechooser
-            on_selection: function()
+            on_selection: root.convert(filechooser.path, filechooser.selection)
 
         TextInput:
             id: text_input

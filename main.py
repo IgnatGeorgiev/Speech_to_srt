@@ -21,10 +21,10 @@ class LoadDialog(FloatLayout):
     cancel = ObjectProperty(None)
 
 
-class SaveDialog(FloatLayout):
-    save = ObjectProperty(None)
-    text_input = ObjectProperty(None)
-    cancel = ObjectProperty(None)
+#class SaveDialog(FloatLayout):
+ #   save = ObjectProperty(None)
+  #  text_input = ObjectProperty(None)
+   # cancel = ObjectProperty(None)
 
 class ConvertDialog(FloatLayout):
  	convert = ObjectProperty(None)
@@ -33,7 +33,7 @@ class ConvertDialog(FloatLayout):
 
 class Root(FloatLayout):
     loadfile = ObjectProperty(None)
-    savefile = ObjectProperty(None)
+    #savefile = ObjectProperty(None)
     convertfile = ObjectProperty(None)
     text_input = ObjectProperty(None)
 
@@ -80,11 +80,11 @@ class Root(FloatLayout):
                             size_hint=(0.9, 0.9))
         self._popup.open()
 
-    def show_save(self):
-        content = SaveDialog(save=self.save, cancel=self.dismiss_popup)
-        self._popup = Popup(title="Save file", content=content,
-                            size_hint=(0.9, 0.9))
-        self._popup.open()
+   # def show_save(self):
+    #    content = SaveDialog(save=self.save, cancel=self.dismiss_popup)
+     #   self._popup = Popup(title="Save file", content=content,
+      #                      size_hint=(0.9, 0.9))
+       # self._popup.open()
 
     def show_convert(self):
      	content = ConvertDialog(convert=self.convert, canscel=self.dismiss_popup)
@@ -96,15 +96,17 @@ class Root(FloatLayout):
 
         self.dismiss_popup()
 
-    def save(self, path, filename):
-        with open(os.path.join(path, filename), 'w') as stream:
-            stream.write(self.text_input.text)
+    #def save(self, path, filename):
+     #   with open(os.path.join(path, filename), 'w') as stream:
+      #      stream.write(self.text_input.text)
 		
-	    self.dismiss_popup()
+	    #self.dismiss_popup()
 
-
+	button1 = Button('convert')
+	button1.bind(function())
     def convert(self,path,filename):
-    	function()
+    	path_dir = os.path.join(path, filename[0])
+    	self.function()
     	
     	self.dismiss_popup()
 
@@ -114,7 +116,7 @@ class Editor(App):
 
 Factory.register('Root', cls=Root)
 Factory.register('LoadDialog', cls=LoadDialog)
-Factory.register('SaveDialog', cls=SaveDialog)
+#Factory.register('SaveDialog', cls=SaveDialog)
 Factory.register('ConvertDialog', cls=ConvertDialog)
 
 if __name__ == '__main__':
