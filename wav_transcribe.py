@@ -12,7 +12,7 @@ def function():
     extension = WAV_FILE.split(".")[-1]
     text_file =("sample.txt","w")
     if (extension != "wav"):
-        os.system("avconv -i " + WAV_FILE + " -vn -f wav temp.wav")
+        os.system("avconv -i " + WAV_FILE + "  -vn -f wav temp.wav")
         WAV_FILE  = "temp.wav"
     fname = WAV_FILE
     with contextlib.closing(wave.open(fname,'r')) as f:
