@@ -1,1 +1,1 @@
-web: python wav_transcribe.py
+web: python wav_transcribe.py test.wav
